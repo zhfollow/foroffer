@@ -1,0 +1,27 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+bool compare(int a, int b)
+{
+	return a > b;
+}
+
+int main()
+{
+	//int arr[6] = {23,45,64,21,65,78};
+	string arr1[6] = { "27","45","64","21","6254","78" };
+	//sort(arr, arr + 6,compare);
+	//sort(arr, arr + 6, [] (int a, int b) {return a > b; });//lambda ÄäÃûº¯Êı
+	//sort(arr, arr + 6, less<int>());
+	sort(arr1, arr1 + 6, [](string a, string b) {return a > b; });
+	cout << ("625" > "64")<<endl;
+	for (int i =0;i<6;++i)
+	{
+		cout << arr1[i]<<endl;
+	}
+
+
+
+}

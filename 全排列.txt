@@ -1,0 +1,136 @@
+//µİ¹éĞ´·¨
+
+#include <iostream>
+using namespace std;//°üº¬ÁËswap
+
+void permutation(int a[], int m, int n)
+{
+	if (m == n)
+	{
+		for (int i = 0; i <= n; i++)
+			cout <<a[i];
+		cout << endl;
+	}
+	else
+	{
+		for (int i = m; i <= n; i++)
+		{
+			swap(a[i], a[m]);
+			permutation(a, m + 1, n);
+			swap(a[i], a[m]);
+		}
+	}
+}
+
+
+int main()
+{
+	int a[4] = { 1,2,3,4 };
+	
+	
+	permutation(a, 0, 3);
+
+}
+
+//×ÖµäĞ´·¨ ·Çµİ¹é
+
+#include <iostream>
+#include <algorithm>
+using namespace std;//°üº¬ÁËswap
+
+bool NextPernutation(int a[], int n)
+{
+	int i = n - 2;
+	for (; i >= 0; i--)
+	{
+		if (a[i] < a[i + 1])
+		{
+			break;
+		}
+	}
+	if (i < 0)
+		return false;
+	int m = i;
+	i++;
+	for (; i < n; i++)
+	{
+		if (a[i] < a[m])
+		{
+			break;
+		}
+	}
+	swap(a[i - 1], a[m]);
+	sort(a + m + 1, a + n);
+	for (int j = 0; j < n; j++)
+	{
+		cout << a[j];
+	}
+	cout << endl;
+	return true;
+}
+
+
+
+void Pernutation(int a[], int n)
+{
+	sort(a, a + n);
+	for (int j = 0; j < n; j++)
+	{
+		cout << a[j];
+	}
+	cout << endl;
+	while (NextPernutation(a, n));
+
+}
+
+int main()
+{
+	int a[5] = { 1,2,3,4 ,5};
+	
+	Pernutation(a, 5);
+	
+}
+
+
+
+//STLÊµÏÖ ×Öµä½µĞòÓë×ÖµäÉıĞò¶¼ÓĞ
+#include <iostream>
+#include <algorithm>
+
+
+using namespace std;
+
+void pernutation(int a[], int n)//×ÖµäĞòÉıĞòÅÅÁĞ
+{
+	sort(a, a + n);
+	do {
+		for (int i = 0; i < n; i++)
+		{
+			cout << a[i];
+		}
+		cout << endl;
+
+	} while (next_permutation(a, a + n));
+}
+
+
+void pernutation1(int a[], int n)//×ÖµäĞò½µĞòÅÅÁĞ
+{
+	sort(a, a + n, [](int a, int b) {return a > b; });
+	do {
+		for (int i = 0; i < n; i++)
+		{
+			cout << a[i];
+		}
+		cout << endl;
+
+	} while (prev_permutation(a, a + n));
+}
+
+int main()
+{
+	int a[4] = { 5 ,6, 7, 8, };
+	pernutation(a, 4);//×ÖµäĞòÉıĞòÅÅÁĞ
+	pernutation1(a,4);//×ÖµäĞò½µĞòÅÅÁĞ
+	
+}

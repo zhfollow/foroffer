@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+void heapSort(int a[],int length);
+void adjustHeap(int *a,int i,int length);
+void swap(int *a, int *b)
+{
+	int c;
+	c = *a;
+	*a = *b;
+	*b = c;
+
+};
+int main()
+{
+	/*vector<int> a{5,6,7,3,9,1,4,6,8,9};
+	for (auto iter = a.begin(); iter != a.end(); iter++)
+		cout << *iter<<endl;
+	int size = a.size();
+	cout << size;
+	*/
+	int a[11] = { 5,6,7,3,9,1,4,6,8,9 };
+	//sort(a,a+10);
+	heapSort(a, 10);
+	for (int i = 0; i < 10; i++)
+		cout << a[i];
+
+}
+void adjustHeap(int *a, int i, int length)
+{
+	int nchild = 2 * i + 1;
+	for (;i*2 +1<length; i = nchild) 
+	{
+		nchild = i * 2 + 1;
+		if (nchild + 1 < length && a[nchild] < a[nchild + 1])
+			nchild++;
+		if (a[i] < a[nchild])
+		{
+			swap(&a[i], &a[nchild]);
+		}
+		else
+			break;
+	}
+}
+
+void heapSort(int a[],int length)
+{
+	for (int k = length / 2 - 1; k >= 0; k--)
+	{
+		adjustHeap(a, k, length);
+	}
+	for (int i = length - 1; i > 0; i--)
+	{
+		swap(&a[0], &a[i]);
+		adjustHeap(a, 0, i);
+	}
+}

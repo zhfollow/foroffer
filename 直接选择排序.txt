@@ -1,0 +1,82 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+void selectSort(int a[],int length);
+void swap(int *a, int *b)
+{
+	int c;
+	c = *a;
+	*a = *b;
+	*b = c;
+
+};
+int main()
+{
+	/*vector<int> a{5,6,7,3,9,1,4,6,8,9};
+	for (auto iter = a.begin(); iter != a.end(); iter++)
+		cout << *iter<<endl;
+	int size = a.size();
+	cout << size;
+	*/
+	int a[11] = { 5,9,7,3,9,5,4,6,10,9 ,2};
+	//sort(a,a+10);
+	selectSort(a, 11);
+	for (int i = 0; i < 11; i++)
+		cout << a[i];
+
+}
+
+void selectSort(int a[],int length)
+{
+/*	for (int i = 0; i < length/2; i++)
+	{
+		int min = i;
+		int max = i;
+		for (int j = i; j < length - i; j++)
+		{
+			if (a[j] < a[min])
+			{
+				min = j;
+			}
+			if (a[j] > a[max])
+			{
+				max = j;
+			}
+		}
+		swap(&a[i],&a[min]);
+		if (i == max)
+			max = min;
+		swap(&a[length-i-1],&a[max]);
+
+	}
+	*/
+	int left = 0;
+	int right = length - 1;
+
+	while (left <= right)
+	{
+		int min = left;
+		int max = left;
+		for (int i = left; i <= right; ++i)
+		{
+			if (a[i] < a[min])
+			{
+				min = i;
+			}
+			if (a[i] > a[max])
+			{
+				max = i;
+			}
+		}
+		swap(a[left], a[min]);
+		if (left == max)
+			max = min;
+		swap(a[right], a[max]);
+
+		++left;
+		--right;
+	}
+
+}
