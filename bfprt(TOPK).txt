@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+
+
+int insertSort(int a[], int low,int high)//插入排序，返回中位数
+{
+	for (int i = low+1; i < high; i++)
+	{
+		int j = i - 1;
+		int k = a[i];
+		while (a[j] > k&& j >= low)
+		{
+			a[j + 1] = a[j];
+			j--;
+		}
+		a[j + 1] = k;
+	}
+	return (low + high) / 2;
+
+}
+
+int getpoixidex(int a[], int low, int high)//寻找要比较的数的位置（核心）
+{
+	if (low == high)
+		return low;
+	int left = low;
+	int i = low;
+	for (; i + 4 <= high; i+=5)
+	{
+		int idex = insertSort(a, i, i + 4);
+		swap(a[left++], a[idex]);
+	}
+	int num = high - i + 1;
+	if (num > 0)
+	{
+		int idex = insertSort(a, i, i + num-1);
+		swap(a[left++], a[idex]);
+	}
+	if (left == low + 1)
+		return low;
+	return getpoixidex(a, low, low + left - 1);
+}
+
+
+
+int Partion(int a[], int low, int high,int p)//快排的partion
+{
+	
+	if (low == high)
+		return low;
+	swap(a[low], a[p]);
+	int k = a[low];
+	while (low < high)
+	{
+		while (k <= a[high]&&low<high)
+		{
+			high--;
+		}
+		swap(a[low], a[high]);
+		while (a[low] <= k&&low<high)
+		{
+			low++;
+		}
+		swap(a[low], a[high]);
+	}
+	return low;
+}
+
+
+int Bfprt(int a[], int low, int high,int k)//思路和快排一样，但是只判断topk（所在区域） 
+{
+	int mid = getpoixidex(a, low, high);
+	cout << mid<<endl;
+	int i = Partion(a,low, high,mid);
+	int m = i - low+1;
+	if (m == k)
+		return a[i];
+	if (m > k)
+		return Bfprt(a, low, i - 1, k);
+	return Bfprt(a, i + 1, high, k - m);
+}
+
+int main()
+{
+	int a[10] = { 5,6,7,3,9,1,4,6,8,9 };
+	//insertSort(a, 0,9);
+	//Partion(a, 0, 9);
+	cout << Bfprt(a, 0, 9, 1)<<endl;
+	for (int i = 0; i < 10; i++)
+	{
+		cout << a[i];
+	}
+
+}
