@@ -1,0 +1,91 @@
+//字符串a包含多少个字符串b
+
+#include<iostream>
+#include<string>
+using namespace std;
+
+int* cNext(string a)//求Next数组next[i]表示0到i-1中前缀和后缀相同的最大字符数
+{
+	int* next = new int[a.size()+1];
+	next[0] =next[1]= 0;
+	int j=0;
+	int len = a.size();
+	/*for (int i = 1; i < a.size(); i++)
+	{
+		j = next[i];
+		if (a[i] == a[j])
+		{
+			next[i + 1] = next[i] + 1;
+		}
+		else
+		{	
+			while (a[i] != a[j] && j > 0) 
+				j = next[j];
+			if(a[i] ==a[j]) 
+				next[i + 1] = next[j] + 1;
+			else
+				next[i + 1] = 0;
+		}
+
+	}
+	*/
+	for (int i = 1; i <len; i++)
+	{
+		while (j > 0 && a[i] != a[j])
+			j = next[j];
+		if (a[i] == a[j])
+			j++;
+		next[i + 1] = j;
+	}
+	return next;
+}
+
+
+int search(string a, string b)
+{
+	int* next;
+	next = cNext(b);
+	
+	int alen = a.size();
+	int blen = b.size();
+	int j = 0;
+	int i = 0; 
+	int n = 0;
+
+	while (alen - i >= blen - j)
+	{
+		if (a[i] == b[j])
+		{
+			i++;
+			j++;
+			if (j == blen)
+			{
+				n++;
+				j = next[j];
+			}
+		}
+		else
+		{
+			j = next[j ];
+			if (j == 0)
+			{
+				if (a[i] != a[j])
+					i++;
+			}
+		}
+
+	}
+	return n;
+}
+
+
+
+
+
+int main()
+{
+	string a = "abcabadabcadabcdeacabade";
+	string b = "abade";
+	cout<<search(a, b)<<endl;
+	//cout << a.find(b)<<endl;
+}
