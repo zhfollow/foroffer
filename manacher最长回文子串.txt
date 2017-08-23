@@ -1,0 +1,65 @@
+#include<iostream>
+#include <string>
+using namespace std;
+
+
+int manacher(string a)
+{
+	int nlen = a.length() * 2 + 1;
+	int *p = new int[nlen+1];
+	memset(p, 0, sizeof(p));
+	string str = "$#";
+	for (int i = 0; i < (int)a.length(); i++)
+	{
+		str += a[i];
+		str += "#";
+	}
+	str += '\0';
+	//cout << str<<endl;
+	int pr = 0, idex = 0, max = 0, fidex = 0;
+	for (int i = 1; i < nlen; i++)
+	{
+		if (pr > i)
+			p[i] = (p[2 * idex - i] < (pr - i)) ? p[2 * idex - i] : (pr - i);
+		else
+		{
+			p[i] = 1;
+		}
+		while (str[i - p[i]] == str[i + p[i]])
+		{
+			p[i]++;
+		}
+		if (i + p[i] > pr)
+		{
+			pr = i + p[i];
+			idex = i;
+			if (p[i] > max)
+			{
+				max = p[i];
+				fidex = idex;
+			}
+		}
+	}
+	int fmax=0;
+	cout << "最长回文子串是：" << endl;
+	for (int i = fidex-max+1; i < fidex + max; i++)
+	{
+		if (str[i] != '#')
+			cout << str[i];
+	}
+	cout << endl;
+	cout << "最长回文子串长度是：";
+	cout << max-1<<endl;
+	cout << "最长回文子串下标是：";
+	if (fidex % 2 == 0)
+		cout << fidex / 2;
+	else
+		cout << fidex / 2 << "and" << fidex / 2 + 1;
+	return max;
+}
+
+int main()
+{
+	string a = "bddddsssssjkjkkjkjsssssss";
+	manacher(a);
+}
